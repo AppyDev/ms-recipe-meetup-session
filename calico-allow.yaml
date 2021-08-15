@@ -8,15 +8,15 @@ spec:
     - action: Allow
       destination:
         nets:
-          - 52.118.35.131/32
+          - XX.XX.XX.XX/XX
         ports:
           - 443
       protocol: TCP
       source:
         nets:
-          - 76.182.38.57/32
-          - 192.168.0.112/32
-          - 177.241.39.41/32 
+          - XX.XX.XX.XX/XX
+          - XX.XX.XX.XX/XX
+          - XX.XX.XX.XX/XX 
   preDNAT: true
   selector: ibm.role=='worker_public'
   order: 1800
