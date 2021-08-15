@@ -4,5 +4,5 @@ metadata:
   name: "ews-jwt-auth"
 spec:
   jwtRules:
-  - issuer: "https://us-south.appid.cloud.ibm.com/oauth/v4/587ec275-3d25-44bf-a853-0bb69bc9c584"
-    jwksUri: "https://us-south.appid.cloud.ibm.com/oauth/v4/587ec275-3d25-44bf-a853-0bb69bc9c584/publickeys"
+  - issuer: "https://us-south.appid.cloud.ibm.com/oauth/v4/<appid-tenant-id>"
+    jwksUri: "https://us-south.appid.cloud.ibm.com/oauth/v4/<appid-tenant-id>/publickeys"
