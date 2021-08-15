@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-audit-service
+  labels:
+    app: event-audit-service
+spec:
+  ports:
+    - port: 3030
+      name: http
+      protocol: TCP
+      targetPort: 3030
+  selector:
+    app: event-audit-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-audit-service
+  labels:
+    app: event-audit-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-audit-service
+  template:
+    metadata:
+      labels:
+        app: event-audit-service
+    spec:
+      containers:
+        - name: event-audit-service
+          image: '{{TARGET_REPO}}.artifactory.swg-devops.com/{{SERVICE_NAME}}:{{IMAGE_TAG}}'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3030
+          env:
+            - name: CLOUDANT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: events-cloudant-secret
+                  key: CLOUDANT_URL
+            - name: CLOUDANT_ACCOUNT
+              valueFrom:
+                secretKeyRef:
+                  name: events-cloudant-secret
+                  key: CLOUDANT_USER_NAME
+            - name: CLOUDANT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: events-cloudant-secret
+                  key: CLOUDANT_PASSWORD
+            - name: AUDIT_BASE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: event-audit-service-config
+                  key: AUDIT_BASE_PATH
+            - name: AUDIT_CLOUDANT_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: event-audit-service-config
+                  key: AUDIT_CLOUDANT_DB
+      imagePullSecrets:
+        - name: artifactory-secret

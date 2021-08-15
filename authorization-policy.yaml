@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-jwt-for-external
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  action: ALLOW
+  rules:
+    - to:
+      - operation:
+          paths: ["/events/api/*"]
+      when:
+      - key: request.auth.claims[iss]
+        values: ["https://us-south.appid.cloud.ibm.com/oauth/v4/587ec275-3d25-44bf-a853-0bb69bc9c584"]

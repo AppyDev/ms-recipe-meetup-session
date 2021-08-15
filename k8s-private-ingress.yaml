@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: alb-ingress
+  namespace: istio-system
+  annotations:
+    kubernetes.io/ingress.class: private-iks-k8s-nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/proxy-body-size: 500m
+    nginx.ingress.kubernetes.io/proxy-ssl-name: newco-events-dev.limited-use.ibm.com
+    nginx.ingress.kubernetes.io/proxy-ssl-server-name: "on"
+    nginx.ingress.kubernetes.io/proxy-ssl-secret: istio-system/alb-certs
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "on"
+    nginx.ingress.kubernetes.io/auth-tls-secret: istio-system/alb-ca-certs
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional"
+spec:
+  tls:
+  - hosts:
+    - newco-events-dev.limited-use.ibm.com
+    secretName: istio-ingressgateway-internal-certs
+  rules:
+  - host: newco-events-dev.limited-use.ibm.com
+    http:
+      paths:
+      - backend:
+          serviceName: istio-ingressgateway
+          servicePort: 443
+        path: /
+        pathType: Prefix

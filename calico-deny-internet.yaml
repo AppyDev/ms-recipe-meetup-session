@@ -1,0 +1,24 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-internet
+spec:
+  applyOnForward: true
+  ingress:
+  - action: Deny
+    destination:
+      ports:
+      - 1:65535
+    protocol: TCP
+    source: {}
+  - action: Deny
+    destination:
+      ports:
+      - 1:65535
+    protocol: UDP
+    source: {}
+  preDNAT: true
+  selector: ibm.role=='worker_public'
+  order: 2000
+  types:
+  - Ingress

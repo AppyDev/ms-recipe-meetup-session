@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ews-internal-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default ingress gateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: MUTUAL
+      serverCertificate: /etc/istio/ingressgateway-internal-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-internal-certs/tls.key
+      caCertificates: /etc/istio/ingressgateway-internal-ca-certs/client-ca-chain.crt
+    hosts:
+    - "<internal-hostname>"

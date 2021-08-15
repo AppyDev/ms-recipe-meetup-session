@@ -1,0 +1,24 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-443
+spec:
+  applyOnForward: true
+  ingress:
+    - action: Allow
+      destination:
+        nets:
+          - 52.118.35.131/32
+        ports:
+          - 443
+      protocol: TCP
+      source:
+        nets:
+          - 76.182.38.57/32
+          - 192.168.0.112/32
+          - 177.241.39.41/32 
+  preDNAT: true
+  selector: ibm.role=='worker_public'
+  order: 1800
+  types:
+    - Ingress

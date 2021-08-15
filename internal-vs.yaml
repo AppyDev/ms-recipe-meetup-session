@@ -1,0 +1,75 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: event-internal-vs
+spec:
+  hosts:
+    - "<internal-hostname>"
+  gateways:
+    - ews-internal-gateway
+  http:
+    - name: "clientletter-route"
+      match:
+        - uri:
+            prefix: /events/api/clientletter
+        - uri:
+            prefix: /events/api/v2/clientletter
+      route:
+        - destination:
+            port:
+              number: 3030
+            host: event-client-letter-service.ews-external-api-stg.svc.cluster.local
+    - name: "bandinfo-route"
+      match:
+        - uri:
+            prefix: /events/api/band
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-bandinfo-service.ews-external-api-stg.svc.cluster.local
+    - name: "activity-route"
+      match:
+        - uri:
+            prefix: /events/api/activity/management
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-activity-management-service.ews-external-api-stg.svc.cluster.local
+    - name: "registration-route"
+      match:
+        - uri:
+            prefix: /events/api/registration
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-registration-service.ews-external-api-stg.svc.cluster.local
+    - name: "opportunity-route"
+      match:
+        - uri:
+            prefix: /events/api/opportunity
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-opportunity-data-service.ews-external-api-stg.svc.cluster.local
+    - name: "russian-route"
+      match:
+        - uri:
+            prefix: /events/api/russian
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-russianapi-service.ews-external-api-stg.svc.cluster.local
+    - name: "invitee-service"
+      match:
+        - uri:
+            prefix: /events/api/invitee
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: event-invitee-service.ews-external-api-stg.svc.cluster.local
