@@ -1,6 +1,6 @@
 apiVersion: static-route.ibm.com/v1
 kind: StaticRoute
 metadata:
-  name: ibm-internal-via-bluefringe-9.0.0.0-8
+  name: ibm-internal-via-bluefringe-X.0.0.0-8
 spec:
-  subnet: "9.0.0.0/8"
+  subnet: "X.0.0.0/8"
