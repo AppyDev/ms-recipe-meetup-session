@@ -14,4 +14,4 @@ spec:
           paths: ["/events/api/*"]
       when:
       - key: request.auth.claims[iss]
-        values: ["https://us-south.appid.cloud.ibm.com/oauth/v4/587ec275-3d25-44bf-a853-0bb69bc9c584"]
+        values: ["https://us-south.appid.cloud.ibm.com/oauth/v4/<appid-tenant-id>"]
