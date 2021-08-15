@@ -7,7 +7,7 @@ data:
   Corefile: |
 $(kubectl -n kube-system get cm coredns -o jsonpath='{.data.Corefile}' | sed 's/^/    /')
     ibm.com 9.in-addr.arpa {
-        forward . 9.0.128.50 9.0.130.50
+        forward . XX.XX.XX.XX XX.XX.XX.XX 
         cache 30
         errors
     }
